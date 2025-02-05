@@ -21,11 +21,11 @@
         <?php echo $form->error($model,'nome'); ?>
     </div>
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'nascimento'); ?>
-        <?php echo $form->textField($model,'nascimento', array('placeholder'=>'YYYY-MM-DD', 'class'=>'date-mask')); ?>
-        <?php echo $form->error($model,'nascimento'); ?>
-    </div>
+	<div class="row">
+		<?php echo $form->labelEx($model, 'nascimento'); ?>
+		<?php echo $form->textField($model, 'nascimento', array('placeholder' => 'YYYY-MM-DD', 'class' => 'date-mask')); ?>
+		<?php echo $form->error($model, 'nascimento'); ?>
+	</div>
 
     <div class="row">
         <?php echo $form->labelEx($model,'email'); ?>
@@ -35,7 +35,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model,'telefone'); ?>
-        <?php echo $form->textField($model,'telefone',array('size'=>20,'maxlength'=>20, 'placeholder'=>'+01 (01) 98765-4321', 'class'=>'phone-mask')); ?>
+        <?php echo $form->textField($model,'telefone',array('size'=>20,'maxlength'=>20, 'placeholder'=>'+55 (01) 98765-4321', 'class'=>'phone-mask')); ?>
         <?php echo $form->error($model,'telefone'); ?>
     </div>
 
@@ -62,7 +62,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('.phone-mask').mask('+55 (00) 00000-0000');
-    });
+	$(document).ready(function() {
+		$('.phone-mask').mask('+55 (00) 00000-0000');
+		$('.date-mask').mask('0000-00-00'); 
+	});
 </script>
+

@@ -18,7 +18,7 @@ class Motorista extends CActiveRecord
             array('status', 'in', 'range' => array('A', 'I'), 'message' => 'Status deve ser A (Ativo) ou I (Inativo).'),
             array('nascimento', 'date', 'format' => 'yyyy-MM-dd', 'message' => 'A data de nascimento deve estar no formato YYYY-MM-DD.'),
 
-            array('nome', 'match', 'pattern' => '/^([\p{L}]{3,}) ([\p{L}]{3,})$/u', 'message' => 'O nome deve ter pelo menos duas palavras com no mínimo 3 caracteres cada.'),
+            array('nome', 'match', 'pattern' => '/^(\p{L}{3,}\s\p{L}{3,}.*)$/u', 'message' => 'O nome deve ter pelo menos duas palavras com no mínimo 3 caracteres cada.'),
             array('placa', 'match', 'pattern' => '/^([A-Z]{3}-\d{4})|([A-Z]{3}\d[A-Z]\d{2})$/', 'message' => 'Placa inválida. Use o formato AAA-9999 ou AAA9A99.'),
 
             array('data_hora_status', 'safe'),
