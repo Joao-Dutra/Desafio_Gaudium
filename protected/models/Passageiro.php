@@ -20,8 +20,6 @@ class Passageiro extends CActiveRecord
 
 			array('nome', 'match', 'pattern' => '/^(\p{L}{3,}\s\p{L}{3,}.*)$/u', 'message' => 'O nome deve ter pelo menos duas palavras com no mínimo 3 caracteres cada.'),
 
-
-			// Mantemos `data_hora_status` como seguro para que possa ser usado na busca, mas sem alterá-lo manualmente
 			array('data_hora_status', 'safe'),
 		);
 	}

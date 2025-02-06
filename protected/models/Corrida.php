@@ -51,16 +51,28 @@ class Corrida extends CActiveRecord
         $criteria->compare('motorista_id', $this->motorista_id);
         $criteria->compare('origem_endereco', $this->origem_endereco, true);
         $criteria->compare('destino_endereco', $this->destino_endereco, true);
-        $criteria->compare('data_inicio', $this->data_inicio, true);
         $criteria->compare('previsao_chegada_destino', $this->previsao_chegada_destino, true);
         $criteria->compare('tarifa', $this->tarifa, true);
         $criteria->compare('status', $this->status, true);
         $criteria->compare('data_fim', $this->data_fim, true);
 
+        if (!empty($this->data_inicio)) {
+            $criteria->addCondition("data_inicio >= :data_inicio");
+            $criteria->params[':data_inicio'] = $this->data_inicio;
+        }
+
+        if (!empty($this->data_fim)) {
+            $criteria->addCondition("data_inicio <= :data_fim");
+            $criteria->params[':data_fim'] = $this->data_fim;
+        }
+
+        $criteria->order = "FIELD(status, 'Em andamento', 'Não Atendida', 'Finalizada'), data_inicio DESC";
+
         return new CActiveDataProvider($this, [
             'criteria' => $criteria,
         ]);
     }
+
 
     public static function model($className = __CLASS__)
     {

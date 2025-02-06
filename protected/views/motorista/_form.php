@@ -46,13 +46,6 @@
 		<?php echo $form->error($model, 'placa'); ?>
 	</div>
 
-
-	<div class="row">
-		<?php echo $form->labelEx($model, 'status'); ?>
-		<?php echo $form->dropDownList($model, 'status', array('A' => 'Ativo', 'I' => 'Inativo')); ?>
-		<?php echo $form->error($model, 'status'); ?>
-	</div>
-
 	<div class="row">
 		<?php echo $form->labelEx($model, 'obs'); ?>
 		<?php echo $form->textField($model, 'obs', array('size' => 60, 'maxlength' => 200, 'placeholder' => 'Observação opcional...')); ?>

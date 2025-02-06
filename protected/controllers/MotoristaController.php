@@ -15,12 +15,28 @@ class MotoristaController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow', 'actions' => array('index', 'view'), 'users' => array('*')),
-			array('allow', 'actions' => array('create', 'update'), 'users' => array('@')),
-			array('allow', 'actions' => array('admin', 'delete'), 'users' => array('admin')),
-			array('deny', 'users' => array('*')),
+			array(
+				'allow', // Permitir acesso às ações públicas
+				'actions' => array('index', 'view'),
+				'users' => array('*'),
+			),
+			array(
+				'allow', // Permitir ações autenticadas
+				'actions' => array('create', 'update', 'alterarStatus'),
+				'users' => array('@'),
+			),
+			array(
+				'allow', // Apenas o admin pode gerenciar e excluir
+				'actions' => array('admin', 'delete'),
+				'users' => array('admin'),
+			),
+			array(
+				'deny', // Negar acesso a todos os outros
+				'users' => array('*'),
+			),
 		);
 	}
+
 
 	public function actionView($id)
 	{
@@ -31,7 +47,7 @@ class MotoristaController extends Controller
 
 	private function saveMotorista($model)
 	{
-		if (isset($_POST['Motorista'])) { 
+		if (isset($_POST['Motorista'])) {
 			$model->attributes = $_POST['Motorista'];
 			if ($model->save()) {
 				$this->redirect(array('view', 'id' => $model->id));
@@ -76,6 +92,22 @@ class MotoristaController extends Controller
 
 		$this->render('admin', array('model' => $model));
 	}
+
+	public function actionAlterarStatus($id)
+	{
+		$model = $this->loadModel($id);
+
+		if (isset($_POST['Motorista'])) {
+			$model->status = $_POST['Motorista']['status'];
+			$model->data_hora_status = date('Y-m-d H:i:s');
+			if ($model->save()) {
+				$this->redirect(array('admin'));
+			}
+		}
+
+		$this->render('status', array('model' => $model));
+	}
+
 
 	public function loadModel($id)
 	{
