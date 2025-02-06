@@ -47,6 +47,7 @@ return array(
 
 				'api/solicitarCorrida' => 'api/solicitarCorrida',
 				'api/finalizarCorrida' => 'api/finalizarCorrida',
+				'estatisticas/estatisticasMotorista' => 'estatisticas/estatisticasMotorista',
 			),
 		),
 
