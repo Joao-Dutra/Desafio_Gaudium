@@ -39,19 +39,24 @@ class EstatisticasController extends Controller
             return;
         }
 
-        // ❌ ERRO DE DATA INICIAL MAIOR QUE A FINAL
+        // ❌ ERRO: DATA INICIAL MAIOR QUE A FINAL
         if (strtotime($dataInicio) > strtotime($dataFim)) {
             http_response_code(400);
             echo json_encode(['sucesso' => false, 'erros' => ['A data inicial deve ser menor ou igual à data final']]);
             return;
         }
 
-        // 🔹 SE PERÍODO FUTURO, TRUNCAR PARA HOJE
+        // 🔹 VERIFICAR PERÍODO ANTES DE TRUNCAR
+        $diff = (strtotime($dataFim) - strtotime($dataInicio)) / (60 * 60 * 24);
+        if ($diff > 180) {
+            http_response_code(400);
+            echo json_encode(['sucesso' => false, 'erros' => ['Período deve ter no máximo 180 dias']]);
+            return;
+        }
+
+        // 🔹 TRUNCAR DATAS PARA O DIA ATUAL SE ESTIVEREM NO FUTURO
         $hoje = date('Y-m-d');
-        if (strtotime($dataInicio) > strtotime($hoje) && strtotime($dataFim) > strtotime($hoje)) {
-            $dataInicio = $hoje;
-            $dataFim = $hoje;
-        } elseif (strtotime($dataFim) > strtotime($hoje)) {
+        if (strtotime($dataFim) > strtotime($hoje)) {
             $dataFim = $hoje;
         }
 
@@ -112,9 +117,9 @@ class EstatisticasController extends Controller
         }
 
         if (empty($lista)) {
-            http_response_code(200);
+            http_response_code(400);
             echo json_encode([
-                'sucesso' => true,
+                'sucesso' => false,
                 'mensagem' => 'Nenhuma corrida encontrada no período especificado.',
                 'motorista' => [
                     'id' => $motorista->id,
